@@ -1,6 +1,10 @@
+
 public class Grade {
     String grade;
     int numGrade;
+
+    
+
     public Grade(int n)
     {
         if(n<0) throw new IllegalGradeException("Illegal grade!");

@@ -6,12 +6,14 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 import java.text.DecimalFormat;
 public class CalculatorGUI extends JFrame implements ActionListener{
+
     JButton letterButton;
     JButton numberButton;
     JButton closeButton;
     Container myContentPane;
+    
     public CalculatorGUI(){
-       createGUI();
+        createGUI();
     }
 
     public void createGUI(){
@@ -175,27 +177,94 @@ public class CalculatorGUI extends JFrame implements ActionListener{
     }
 
     public void numberSelected(){
+
         LinkedList <Grade> gradeList = new LinkedList<Grade>();
+        
+        LinkedList<Integer> creditList = new LinkedList<Integer>();
+        
         String grade = "";
-        int numGrade=0;
+        String hours = "";
+        int credits=0;
+        double gpa = 0.0;
+        int creditSum = 0;
+        double quality=0;
+
         while(true)
         {
             try{
                 grade = JOptionPane.showInputDialog(null, "Enter a Number Grade to calculate your GPA! Enter STOP to stop");
                 if(grade.equals("STOP")) break;
-                numGrade = Integer.parseInt(grade);
-                Grade enteredGrade = new Grade(numGrade);
+                Grade enteredGrade = new Grade(Integer.parseInt(grade));
                 gradeList.add(enteredGrade);
+                try{
+                    hours = JOptionPane.showInputDialog(null, "How many credits?");
+                    credits = Integer.parseInt(hours);
+                    
+                    if(credits<1 || credits>4) throw new IllegalGradeException("illegal credits");
+                    creditList.add(credits);
+                    
+                }
+                catch(IllegalGradeException e)
+                {
+                    while(credits<1||credits>4)
+                    {
+                        try{
+                            hours = JOptionPane.showInputDialog(null, "Please enter a valid number of credits(from 1 to 4)");
+                            credits = Integer.parseInt(hours);
+                        }
+                        catch(IllegalGradeException f){
+                            credits = 0;
+                        }
+                    }
+                    creditList.add(credits);
+                    
+                }
             }
             catch(IllegalGradeException g)
             {
-                JOptionPane.showMessageDialog(null, "That is not a valid Number Grade, please re-enter!");
+                JOptionPane.showMessageDialog(null, "That is not a valid number grade, please re-enter!");
             }
-            catch(NumberFormatException n)
-            {
-                JOptionPane.showMessageDialog(null, "That is not a valid number!");
-            }
+            
         }
+
+        double currGrade;
+        int credit;
+        ListIterator<Grade> gradeIterator = gradeList.listIterator();
+        ListIterator<Integer> creditIterator = creditList.listIterator();
+
+        while(gradeIterator.hasNext() && creditIterator.hasNext())
+        {
+            currGrade = gradeIterator.next().getGPA();
+            credit = creditIterator.next();
+            
+            creditSum+= credit;
+            quality += credit*currGrade;
+        }
+
+        gpa = quality/creditSum;
+        myContentPane.removeAll();
+        myContentPane.revalidate();
+        myContentPane.repaint();
+
+        DecimalFormat df = new DecimalFormat("#.##");
+        String gpaFinal = df.format(gpa);
+
+        JPanel gpaFinalShower = new JPanel();
+        
+        JLabel gpaShow = new JLabel("Your GPA is a "+ gpaFinal);
+        gpaFinalShower.setBounds(300,250,250,100);
+        
+        gpaShow.setFont(new Font("MV Boli",Font.BOLD,20));
+        gpaFinalShower.add(gpaShow);
+
+        JPanel closeButtonPanel = new JPanel();
+        closeButton = new JButton("Return home");
+        closeButtonPanel.setBounds(300,450,250,100);
+        closeButton.addActionListener(this);
+        closeButtonPanel.add(closeButton);
+
+        myContentPane.add(closeButtonPanel);
+        myContentPane.add(gpaFinalShower);
     }
 
     private void createMenu() {
