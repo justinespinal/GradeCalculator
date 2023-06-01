@@ -161,14 +161,14 @@ public class CalculatorGUI extends JFrame implements ActionListener{
         JPanel gpaFinalShower = new JPanel();
         
         JLabel gpaShow = new JLabel("Your GPA is a "+ gpaFinal);
-        gpaFinalShower.setBounds(300,250,250,100);
+        gpaFinalShower.setBounds(250,250,250,100);
         
-        gpaShow.setFont(new Font("MV Boli",Font.BOLD,20));
+        gpaShow.setFont(new Font("Trebuchet MS",Font.BOLD,20));
         gpaFinalShower.add(gpaShow);
 
         JPanel closeButtonPanel = new JPanel();
         closeButton = new JButton("Return home");
-        closeButtonPanel.setBounds(300,450,250,100);
+        closeButtonPanel.setBounds(250,450,250,100);
         closeButton.addActionListener(this);
         closeButtonPanel.add(closeButton);
 
@@ -252,14 +252,14 @@ public class CalculatorGUI extends JFrame implements ActionListener{
         JPanel gpaFinalShower = new JPanel();
         
         JLabel gpaShow = new JLabel("Your GPA is a "+ gpaFinal);
-        gpaFinalShower.setBounds(300,250,250,100);
+        gpaFinalShower.setBounds(250,250,250,100);
         
-        gpaShow.setFont(new Font("MV Boli",Font.BOLD,20));
+        gpaShow.setFont(new Font("Trebuchet MS",Font.BOLD,20));
         gpaFinalShower.add(gpaShow);
 
         JPanel closeButtonPanel = new JPanel();
         closeButton = new JButton("Return home");
-        closeButtonPanel.setBounds(300,450,250,100);
+        closeButtonPanel.setBounds(250,450,250,100);
         closeButton.addActionListener(this);
         closeButtonPanel.add(closeButton);
 
