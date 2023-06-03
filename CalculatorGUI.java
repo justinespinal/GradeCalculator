@@ -84,7 +84,6 @@ public class CalculatorGUI extends JFrame implements ActionListener{
             myContentPane.repaint();
             createGUI();
         }
-
     }
 
     public void letterSelected(){
@@ -133,7 +132,6 @@ public class CalculatorGUI extends JFrame implements ActionListener{
             {
                 JOptionPane.showMessageDialog(null, "That is not a valid letter grade, please re-enter!");
             }
-            
         }
 
         double currGrade;
