@@ -9,6 +9,7 @@ public class CalculatorGUI extends JFrame implements ActionListener{
 
     JButton letterButton;
     JButton numberButton;
+    JButton classButton;
     JButton closeButton;
     Container myContentPane;
     
@@ -46,6 +47,15 @@ public class CalculatorGUI extends JFrame implements ActionListener{
         numberButton.addActionListener(this);
         buttonPanel2.setBounds(450,650, 200,100);
 
+        JPanel buttonPanel3 = new JPanel();
+       //buttonPanel2.setBackground(Color.DARK_GRAY);
+        classButton = new JButton("Class Grade");
+        buttonPanel3.add(classButton);
+        classButton.addActionListener(this);
+        buttonPanel3.setBounds(300,650, 200,100);
+
+
+
         //Main JLabel
         JLabel startLabel = new JLabel("Queens College Code for All Grade Calculator");
         startLabel.setIcon(cfa);
@@ -60,6 +70,7 @@ public class CalculatorGUI extends JFrame implements ActionListener{
         myContentPane.add(panelIcon);
         myContentPane.add(buttonPanel);
         myContentPane.add(buttonPanel2);
+        myContentPane.add(buttonPanel3);
         createMenu();//sets menu bar onto GUI
         this.setVisible(true);
     }
@@ -76,6 +87,13 @@ public class CalculatorGUI extends JFrame implements ActionListener{
             myContentPane.revalidate();
             myContentPane.repaint();
             numberSelected();
+        }
+        else if(e.getSource()==classButton)
+        {
+            myContentPane.removeAll();
+            myContentPane.revalidate();
+            myContentPane.repaint();
+            classSelected();
         }
         else if(e.getSource()==closeButton)
         {
@@ -264,6 +282,34 @@ public class CalculatorGUI extends JFrame implements ActionListener{
         myContentPane.add(closeButtonPanel);
         myContentPane.add(gpaFinalShower);
     }
+
+    public void classSelected(){
+        LinkedList <Grade> gradeList = new LinkedList<Grade>();
+        
+        LinkedList<Integer> percentList = new LinkedList<Integer>();
+
+        String percent = "";
+        int percentSum = 0;
+
+        while(true){
+            percent = JOptionPane.showInputDialog(null, "Enter a percentage that does not exceed 100 and is greater than 0:");
+            if(Integer.parseInt(percent)<=0 || Integer.parseInt(percent)>100){
+                while(Integer.parseInt(percent)<=0 || Integer.parseInt(percent)>100){
+                    percent = JOptionPane.showInputDialog(null, "Please enter a valid percentage");
+                }
+            }
+            percentSum += Integer.parseInt(percent);
+            if(percentSum>100){
+                while(percentSum>100){
+                    percentSum -= Integer.parseInt(percent);
+                    percent = JOptionPane.showInputDialog(null, "Please enter a percentage that does not exceed 100");
+                    percentSum += Integer.parseInt(percent);
+                }
+            }
+            percentList.add(Integer.parseInt(percent));
+        }
+    }
+
 
     private void createMenu() {
         JMenuBar menuBar  = new JMenuBar();
