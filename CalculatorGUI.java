@@ -19,7 +19,7 @@ public class CalculatorGUI extends JFrame implements ActionListener{
 
     public void createGUI(){
         this.setSize(800,800);
-        this.setLocation(500,250);
+        this.setLocation(500,100);
         this.setTitle("Grade Calculator");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLayout(null);
@@ -52,7 +52,7 @@ public class CalculatorGUI extends JFrame implements ActionListener{
         classButton = new JButton("Class Grade");
         buttonPanel3.add(classButton);
         classButton.addActionListener(this);
-        buttonPanel3.setBounds(300,650, 200,100);
+        buttonPanel3.setBounds(300,650, 210,100);
 
 
 
