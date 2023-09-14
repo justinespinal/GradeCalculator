@@ -1,9 +1,15 @@
 
 public class Grade {
     String grade;
-    int numGrade;
+    double numGrade;
 
     public Grade(int n)
+    {
+        if(n<0) throw new IllegalGradeException("Illegal grade!");
+        numGrade = n;
+        grade = toGrade(n);
+    }
+    public Grade(double n)
     {
         if(n<0) throw new IllegalGradeException("Illegal grade!");
         numGrade = n;
@@ -41,7 +47,7 @@ public class Grade {
         else return 0.0;
     }
 
-    public int getNum()
+    public double getNum()
     {
         return numGrade;
     }
@@ -66,7 +72,7 @@ public class Grade {
         grade = toGrade(n);
     }
 
-    public String toGrade(int n){
+    public String toGrade(double n){
         
         if(n>=97)
         {

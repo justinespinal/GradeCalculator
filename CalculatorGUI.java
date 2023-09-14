@@ -286,19 +286,21 @@ public class CalculatorGUI extends JFrame implements ActionListener{
     public void classSelected(){
         LinkedList <Grade> gradeList = new LinkedList<Grade>();
         
-        LinkedList<Integer> percentList = new LinkedList<Integer>();
-
+        LinkedList<Double> percentList = new LinkedList<Double>();
         String percent = "";
         int percentSum = 0;
-
+        double convert=0.0;
+        String grade = "";
+        Grade curr;
         while(true){
+            if(percentSum==100) break;
             percent = JOptionPane.showInputDialog(null, "Enter a percentage that does not exceed 100 and is greater than 0:");
-            if(Integer.parseInt(percent)<=0 || Integer.parseInt(percent)>100){
+            if(Double.parseDouble(percent)<=0 || Double.parseDouble(percent)>100){
                 while(Integer.parseInt(percent)<=0 || Integer.parseInt(percent)>100){
                     percent = JOptionPane.showInputDialog(null, "Please enter a valid percentage");
                 }
             }
-            percentSum += Integer.parseInt(percent);
+            percentSum += Double.parseDouble(percent);
             if(percentSum>100){
                 while(percentSum>100){
                     percentSum -= Integer.parseInt(percent);
@@ -306,8 +308,59 @@ public class CalculatorGUI extends JFrame implements ActionListener{
                     percentSum += Integer.parseInt(percent);
                 }
             }
-            percentList.add(Integer.parseInt(percent));
+            percentList.add(Double.parseDouble(percent));
+            try{
+                grade = JOptionPane.showInputDialog(null, "Enter a number grade for this percentage");
+                convert = Double.parseDouble(grade);
+                curr = new Grade(convert);
+                gradeList.add(curr);
+            }
+            catch(IllegalGradeException e){
+                while(convert<0){
+                    grade = JOptionPane.showInputDialog(null, "Enter a number grade for this percentage");
+                    convert = Double.parseDouble(grade);
+                }
+                curr = new Grade(grade);
+                gradeList.add(curr);
+            }
         }
+
+        Double finalGrade = 0.0;
+
+        ListIterator<Grade> gradeIterator = gradeList.listIterator();
+        ListIterator<Double> percentIterator = percentList.listIterator();
+
+        while(gradeIterator.hasNext() && percentIterator.hasNext())
+        {
+            double currGrade = gradeIterator.next().numGrade;
+            double currPercent = percentIterator.next()/100.0;
+            
+            finalGrade += currPercent*currGrade;
+        }
+
+        myContentPane.removeAll();
+        myContentPane.revalidate();
+        myContentPane.repaint();
+
+        DecimalFormat df = new DecimalFormat("#.##");
+        String gradeFinal = df.format(finalGrade);
+
+        JPanel gradeFinalShower = new JPanel();
+        Grade letter = new Grade(finalGrade);
+        JLabel gpaShow = new JLabel("Your class grade is a "+ finalGrade+"% "+ "--> " + letter.getGrade());
+        gradeFinalShower.setBounds(215,250,350,100);
+        
+        gpaShow.setFont(new Font("Trebuchet MS",Font.BOLD,20));
+        gradeFinalShower.add(gpaShow);
+
+        JPanel closeButtonPanel = new JPanel();
+        closeButton = new JButton("Return home");
+        closeButtonPanel.setBounds(250,450,250,100);
+        closeButton.addActionListener(this);
+        closeButtonPanel.add(closeButton);
+
+        myContentPane.add(closeButtonPanel);
+        myContentPane.add(gradeFinalShower);
     }
 
 
